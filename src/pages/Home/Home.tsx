@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { BASE_URL } from '../../common/constants';
 import RadioTabs from '../../components/controls/RadioTabs';
+import { useCommunicationWithHost } from '../../hooks/useCommunicationWithHost';
 import { getInitialTabValue } from './logic/utils/getInitialValue';
 
 const Tabs = {
@@ -43,6 +44,16 @@ export default function Home() {
     const targetPath = `${BASE_URL}/home/${tabValue}`;
     navigate(targetPath);
   }
+
+  useEffect(() => {
+    const message = {
+      type: 'request-origin',
+      payload: { hello: 'world' },
+    };
+    window.parent.postMessage(message, '*');
+  }, []);
+
+  useCommunicationWithHost();
 
   return (
     <div className='size-full flex flex-col gap-6 overflow-auto'>

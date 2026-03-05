@@ -1,0 +1,1 @@
+export { useCommunicationWithHost } from './useCommunicationWithHost';
