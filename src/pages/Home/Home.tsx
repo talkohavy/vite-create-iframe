@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { BASE_URL } from '../../common/constants';
+import { BASE_URL, IncomingMessageEvents } from '../../common/constants';
 import RadioTabs from '../../components/controls/RadioTabs';
 import { useCommunicationWithHost } from '../../hooks/useCommunicationWithHost';
 import { getInitialTabValue } from './logic/utils/getInitialValue';
+import type { GetHostOriginPayload, PrintMessagePayload } from './types';
 
 const Tabs = {
   Overview: '',
@@ -53,11 +54,27 @@ export default function Home() {
     window.parent.postMessage(message, '*');
   }, []);
 
-  useCommunicationWithHost();
+  const [hostOrigin, setHostOrigin] = useState('unknown');
+
+  const getHostOriginHandler = useCallback((eventMessage: GetHostOriginPayload) => {
+    setHostOrigin(eventMessage.payload.origin as string);
+  }, []);
+
+  const printMessageHandler = useCallback((eventMessage: PrintMessagePayload) => {
+    console.log('message is:', eventMessage.payload.message);
+  }, []);
+
+  const incomingMessageHandlers = useMemo(() => {
+    return {
+      [IncomingMessageEvents.GetHostOrigin]: getHostOriginHandler,
+      [IncomingMessageEvents.PrintMessage]: printMessageHandler,
+    };
+  }, [getHostOriginHandler, printMessageHandler]);
+
+  useCommunicationWithHost({ incomingMessageHandlers });
 
   return (
     <div className='size-full flex flex-col gap-6 overflow-auto'>
-      {/* Tab Navigation */}
       <div className='border-b border-gray-200 dark:border-gray-600 px-6 pt-6'>
         <RadioTabs
           value={currentTabValue}
@@ -69,6 +86,8 @@ export default function Home() {
 
       <div className='size-full'>
         <Outlet />
+
+        <div className='text-sm text-gray-500 p-6'>Host origin: {hostOrigin}</div>
       </div>
     </div>
   );
