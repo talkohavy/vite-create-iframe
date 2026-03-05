@@ -4,17 +4,16 @@ import type { Route } from './common/types';
 
 // Main pages
 const RedirectToHome = lazy(() => import('./pages/RedirectToHome'));
-const HomePage = lazy(() => import('./pages/Home'));
 const ServerCallPage = lazy(() => import('./pages/ServerCallPage'));
 const TabCommunicationPage = lazy(() => import('./pages/TabCommunication'));
 const GetCookiesPage = lazy(() => import('./pages/GetCookiesPage'));
-const OutletTabsPage = lazy(() => import('./pages/OutletTabsPage'));
+const HomePage = lazy(() => import('./pages/Home'));
 const MediaCaptureApiPage = lazy(() => import('./pages/MediaCaptureApiPage'));
 
-// OutletTabsPage tabs:
-const OverviewTab = lazy(() => import('./pages/OutletTabsPage/tabs/Overview'));
-const AnalyticsTab = lazy(() => import('./pages/OutletTabsPage/tabs/Analytics'));
-const SettingsTab = lazy(() => import('./pages/OutletTabsPage/tabs/Settings'));
+// Home tabs:
+const OverviewTab = lazy(() => import('./pages/Home/tabs/Overview'));
+const AnalyticsTab = lazy(() => import('./pages/Home/tabs/Analytics'));
+const SettingsTab = lazy(() => import('./pages/Home/tabs/Settings'));
 
 export const routes: Array<Route> = [
   {
@@ -25,32 +24,8 @@ export const routes: Array<Route> = [
   {
     to: `${BASE_URL}/home`,
     text: 'Home',
-    activeNames: [BASE_URL, `${BASE_URL}/home/`],
+    activeNames: [BASE_URL, `${BASE_URL}/home/`, `${BASE_URL}/home/analytics`, `${BASE_URL}/home/settings`],
     Component: HomePage,
-  },
-  {
-    to: `${BASE_URL}/server-call`,
-    text: 'Server Call',
-    activeNames: [`${BASE_URL}/server-call`],
-    Component: ServerCallPage,
-  },
-  {
-    to: `${BASE_URL}/tab-communication`,
-    text: 'Tab Communication',
-    activeNames: [`${BASE_URL}/tab-communication`],
-    Component: TabCommunicationPage,
-  },
-  {
-    to: `${BASE_URL}/get-cookies`,
-    text: 'Get Cookies',
-    activeNames: [`${BASE_URL}/get-cookies`],
-    Component: GetCookiesPage,
-  },
-  {
-    to: `${BASE_URL}/outlet`,
-    text: 'Outlet Tabs',
-    activeNames: [`${BASE_URL}/outlet/`, `${BASE_URL}/outlet/analytics`, `${BASE_URL}/outlet/settings`],
-    Component: OutletTabsPage,
     children: [
       {
         to: '',
@@ -71,6 +46,24 @@ export const routes: Array<Route> = [
         Component: SettingsTab,
       },
     ],
+  },
+  {
+    to: `${BASE_URL}/server-call`,
+    text: 'Server Call',
+    activeNames: [`${BASE_URL}/server-call`],
+    Component: ServerCallPage,
+  },
+  {
+    to: `${BASE_URL}/tab-communication`,
+    text: 'Tab Communication',
+    activeNames: [`${BASE_URL}/tab-communication`],
+    Component: TabCommunicationPage,
+  },
+  {
+    to: `${BASE_URL}/get-cookies`,
+    text: 'Get Cookies',
+    activeNames: [`${BASE_URL}/get-cookies`],
+    Component: GetCookiesPage,
   },
   {
     to: `${BASE_URL}/media-capture-api`,
