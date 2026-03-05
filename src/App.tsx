@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router';
-import Layout from './components/Layout';
+import Main from './components/Main';
 import PageNotFound from './pages/PageNotFound';
 import { routes } from './routes';
 import type { Route as RouteType } from './common/types';
@@ -22,13 +22,13 @@ function renderRoute(route: RouteType, index: number) {
 
 export default function App() {
   return (
-    <Layout>
+    <Main>
       <Suspense>
         <Routes>
           {routes.map((route, index) => renderRoute(route, index))}
           <Route path='*' element={<PageNotFound />} />
         </Routes>
       </Suspense>
-    </Layout>
+    </Main>
   );
 }

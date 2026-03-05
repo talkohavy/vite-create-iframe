@@ -9,7 +9,6 @@ import ReactErrorOverlay from './components/ReactErrorOverlay';
 import SuspenseUntilReady from './components/SuspenseUntilReady';
 import { initHttpClient } from './lib/HttpClient';
 import { initSessionManager } from './lib/SessionManager';
-import DarkThemeProvider from './providers/DarkThemeProvider';
 import { createStore } from './store';
 import './common/bootstrap';
 import './index.css';
@@ -30,9 +29,7 @@ function Client() {
         >
           <StoreProvider store={store}>
             <BrowserRouter>
-              <DarkThemeProvider>
-                <App />
-              </DarkThemeProvider>
+              <App />
             </BrowserRouter>
           </StoreProvider>
         </SuspenseUntilReady>

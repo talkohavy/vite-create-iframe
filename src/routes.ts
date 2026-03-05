@@ -4,11 +4,7 @@ import type { Route } from './common/types';
 
 // Main pages
 const RedirectToHome = lazy(() => import('./pages/RedirectToHome'));
-const ServerCallPage = lazy(() => import('./pages/ServerCallPage'));
-const TabCommunicationPage = lazy(() => import('./pages/TabCommunication'));
-const GetCookiesPage = lazy(() => import('./pages/GetCookiesPage'));
 const HomePage = lazy(() => import('./pages/Home'));
-const MediaCaptureApiPage = lazy(() => import('./pages/MediaCaptureApiPage'));
 
 // Home tabs:
 const OverviewTab = lazy(() => import('./pages/Home/tabs/Overview'));
@@ -46,29 +42,5 @@ export const routes: Array<Route> = [
         Component: SettingsTab,
       },
     ],
-  },
-  {
-    to: `${BASE_URL}/server-call`,
-    text: 'Server Call',
-    activeNames: [`${BASE_URL}/server-call`],
-    Component: ServerCallPage,
-  },
-  {
-    to: `${BASE_URL}/tab-communication`,
-    text: 'Tab Communication',
-    activeNames: [`${BASE_URL}/tab-communication`],
-    Component: TabCommunicationPage,
-  },
-  {
-    to: `${BASE_URL}/get-cookies`,
-    text: 'Get Cookies',
-    activeNames: [`${BASE_URL}/get-cookies`],
-    Component: GetCookiesPage,
-  },
-  {
-    to: `${BASE_URL}/media-capture-api`,
-    text: 'Media Capture API',
-    activeNames: [`${BASE_URL}/media-capture-api`],
-    Component: MediaCaptureApiPage,
   },
 ];
