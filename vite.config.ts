@@ -12,8 +12,8 @@ export default defineConfig(({ mode }) => {
    * Explanation about Environment Variables:
    *
    * 1. vite.config.ts runs in Node when Vite starts. At that moment, no .env file has been loaded yet.
-   * 2. process.env only has what’s in the shell (and any env vars set before running Vite).
-   * 3. import.meta.env is filled later by Vite for your app code, not for the config. So in the config it won’t have your .env values.
+   * 2. process.env only has what's in the shell (and any env vars set before running Vite).
+   * 3. import.meta.env is filled later by Vite for your app code, not for the config. So in the config it won't have your .env values.
    *
    * Solution: Use Vite's loadEnv() inside defineConfig so the config explicitly loads your .env.
    */

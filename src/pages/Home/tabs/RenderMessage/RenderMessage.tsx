@@ -9,13 +9,14 @@ export default function RenderMessage() {
   const { helloMessage } = useRenderMessageLogic();
 
   return (
-    <div className='p-6 space-y-6'>
-      <div>
-        <h2 className='text-2xl font-bold mb-2'>Host → iframe: render on screen</h2>
+    <div className='flex flex-col gap-4 p-6'>
+      <div className='flex flex-col gap-2'>
+        <h2 className='text-2xl font-bold'>Host → iframe: render on screen</h2>
 
         <p className='text-gray-600 dark:text-gray-400'>
-          Same as logging, but the iframe stores the message in state and renders it in the UI. The host can push
-          content (e.g. labels, titles, or dynamic text) into the iframe without a full navigation.
+          Same as logging, but the iframe stores the message in a dedicated state, and renders it in the UI. Once again,
+          only when this tab is mounted, a dedicated <LineOfCode text='helloFromHostHandler' /> is attached, catches the
+          message, and stores the message in a <LineOfCode text='useState' /> hook.
         </p>
       </div>
 

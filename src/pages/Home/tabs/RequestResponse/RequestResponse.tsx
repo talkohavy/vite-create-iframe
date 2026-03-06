@@ -10,9 +10,9 @@ export default function RequestResponse() {
   const { hostOrigin, requestHostOrigin } = useRequestResponseLogic();
 
   return (
-    <div className='p-6 space-y-6'>
-      <div>
-        <h2 className='text-2xl font-bold mb-2'>Request-response: iframe asks, host replies</h2>
+    <div className='flex flex-col gap-4 p-6'>
+      <div className='flex flex-col gap-2'>
+        <h2 className='text-2xl font-bold'>Request-response: iframe asks, host replies</h2>
 
         <p className='text-gray-600 dark:text-gray-400'>
           The iframe sends a request (e.g. <LineOfCode text='request-origin' />) via{' '}
@@ -80,7 +80,7 @@ export default function RequestResponse() {
         the host replies. Use requestId if you have multiple in-flight requests.
       </MessageBox>
 
-      <div className='flex flex-col gap-2 p-4 border-t border-gray-200 dark:border-gray-600 mt-4'>
+      <div className='flex flex-col gap-2 p-4 border-t border-gray-200 dark:border-gray-600'>
         <div className='text-sm text-gray-500'>Host origin: {hostOrigin}</div>
 
         <Button onClick={requestHostOrigin} className='w-fit'>

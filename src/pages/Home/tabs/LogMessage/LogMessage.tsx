@@ -9,14 +9,15 @@ export default function LogMessage() {
   useLogMessageLogic();
 
   return (
-    <div className='p-6 space-y-6'>
-      <div>
-        <h2 className='text-2xl font-bold mb-2'>Host → iframe: log in console</h2>
+    <div className='flex flex-col gap-4 p-6'>
+      <div className='flex flex-col gap-2'>
+        <h2 className='text-2xl font-bold'>Host → iframe: log in console</h2>
 
         <p className='text-gray-600 dark:text-gray-400'>
           The host page sends a <LineOfCode text='postMessage' /> with a payload. The iframe listens with{' '}
-          <LineOfCode text="window.addEventListener('message', ...)" /> and logs the message to the console. Useful for
-          debugging, logging, or one-way notifications.
+          <LineOfCode text="window.addEventListener('message', ...)" />. Only when mounted on this tab, a dedicated log
+          handler is attached, catches the message, and logs the message to the console. Useful for debugging, logging,
+          or one-way notifications.
         </p>
       </div>
 
@@ -43,7 +44,7 @@ export default function LogMessage() {
         <Arrow />
 
         <FlowStep
-          label='3. Iframe logs to console'
+          label="3. Iframe's logHandler logs to console"
           detail={
             <>
               Handler runs <LineOfCode text='console.log(event.data.payload.log)' />. Open DevTools (F12) and trigger

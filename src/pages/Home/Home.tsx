@@ -40,7 +40,7 @@ export default function Home() {
   }
 
   return (
-    <div className='size-full flex flex-col gap-6 overflow-auto'>
+    <div className='size-full flex flex-col overflow-auto'>
       <div className='border-b border-gray-200 dark:border-gray-600 px-6 pt-6'>
         <RadioTabs
           value={currentTabValue}

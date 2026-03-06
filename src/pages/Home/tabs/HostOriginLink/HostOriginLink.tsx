@@ -10,9 +10,9 @@ export default function HostOriginLink() {
   const { hostOrigin } = useHostOriginLinkLogic();
 
   return (
-    <div className='p-6 space-y-6'>
-      <div>
-        <h2 className='text-2xl font-bold mb-2'>Host sends origin → iframe uses it in a Link</h2>
+    <div className='flex flex-col gap-4 p-6'>
+      <div className='flex flex-col gap-2'>
+        <h2 className='text-2xl font-bold'>Host sends origin → iframe uses it in a Link</h2>
 
         <p className='text-gray-600 dark:text-gray-400'>
           The host sends its origin (e.g. <LineOfCode text='https://app.example.com' />) to the iframe. The iframe
@@ -65,7 +65,7 @@ export default function HostOriginLink() {
         URL. The host tells the iframe its origin once; the iframe reuses it for navigation.
       </MessageBox>
 
-      <div className='flex flex-col gap-2 p-4 border-t border-gray-200 dark:border-gray-600 mt-4'>
+      <div className='flex flex-col gap-2 p-4 border-t border-gray-200 dark:border-gray-600'>
         <div className='text-sm text-gray-500'>Host origin: {hostOrigin}</div>
 
         <div className='flex items-center gap-2'>

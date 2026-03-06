@@ -9,16 +9,15 @@ export default function HostTheme() {
   useHostThemeLogic();
 
   return (
-    <div className='p-6 space-y-6'>
-      <div>
-        <h2 className='text-2xl font-bold mb-2'>Host sends theme → iframe updates body class</h2>
+    <div className='flex flex-col gap-4 p-6'>
+      <div className='flex flex-col gap-2'>
+        <h2 className='text-2xl font-bold'>Host sends theme → iframe updates body class</h2>
 
         <p className='text-gray-600 dark:text-gray-400'>
-          The host sends its current theme (<LineOfCode text='"light"' /> or <LineOfCode text='"dark"' />) via{' '}
-          <LineOfCode text='postMessage' />. The iframe sets <LineOfCode text='document.body.className' /> to that value
-          so the embedded app matches the host’s appearance (e.g. Tailwind’s <LineOfCode text='class="dark"' /> or{' '}
-          <LineOfCode text='class="light"' />
-          ).
+          The host sends its current theme state (<LineOfCode text='isDarkMode' className='text-xs' />) via{' '}
+          <LineOfCode text='postMessage' className='text-xs' />. The iframe toggles the "dark" class on the body using{' '}
+          <LineOfCode text="document.body.classList.toggle('dark', isDarkMode);" className='text-xs' />, so that the
+          iframe app matches the host's appearance.
         </p>
       </div>
 
@@ -28,9 +27,8 @@ export default function HostTheme() {
           detail={
             <>
               Host calls{' '}
-              <LineOfCode text='iframeRef.contentWindow.postMessage({ type: "set-theme", payload: { theme: "dark" } }, targetOrigin)' />{' '}
-              (or <LineOfCode text='"light"' />
-              ).
+              <LineOfCode text='iframeRef.contentWindow.postMessage({ type: "get-host-theme", payload: { isDarkMode: true } }, targetOrigin)' />
+              .
             </>
           }
           variant='default'
@@ -42,7 +40,7 @@ export default function HostTheme() {
           label='2. Iframe receives and updates body'
           detail={
             <>
-              Message handler reads <LineOfCode text='event.data.payload.theme' /> and sets{' '}
+              Message handler reads <LineOfCode text='event.data.payload.isDarkMode' /> and sets{' '}
               <LineOfCode text='document.body.className = theme' />.
             </>
           }
@@ -59,7 +57,7 @@ export default function HostTheme() {
       </Scene>
 
       <MessageBox title='When to use'>
-        When the iframe should follow the host’s light/dark mode without implementing its own theme toggle. The host
+        When the iframe should follow the host's light/dark mode without implementing its own theme toggle. The host
         owns the theme; the iframe stays in sync by updating the body class on each theme message.
       </MessageBox>
     </div>
