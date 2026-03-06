@@ -7,8 +7,15 @@ export type GetHostOriginPayload = {
   };
 };
 
-export type PrintMessagePayload = {
-  type: typeof IncomingMessageEvents.PrintMessage;
+export type LogMessagePayload = {
+  type: typeof IncomingMessageEvents.LogMessage;
+  payload: {
+    log: string;
+  };
+};
+
+export type HelloFromHostPayload = {
+  type: typeof IncomingMessageEvents.HelloFromHost;
   payload: {
     message: string;
   };

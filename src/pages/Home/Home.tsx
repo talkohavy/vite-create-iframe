@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
-import { BASE_URL, IncomingMessageEvents } from '../../common/constants';
-import RadioTabs from '../../components/controls/RadioTabs';
-import { useCommunicationWithHost } from '../../hooks/useCommunicationWithHost';
+import { BASE_URL, IncomingMessageEvents, PostMessageEvents } from '@src/common/constants';
+import RadioTabs from '@src/components/controls/RadioTabs';
+import { useCommunicationWithHost } from '@src/hooks/useCommunicationWithHost';
 import { getInitialTabValue } from './logic/utils/getInitialValue';
-import type { GetHostOriginPayload, PrintMessagePayload } from './types';
+import type { GetHostOriginPayload, HelloFromHostPayload, LogMessagePayload } from './types';
 
 const Tabs = {
   Overview: '',
@@ -32,6 +32,7 @@ export default function Home() {
   const location = useLocation();
 
   const [currentTabValue, setCurrentTabValue] = useState(getInitialTabValue);
+  const [helloMessage, setHelloMessage] = useState('');
 
   // Update currentTabValue when the URL changes (e.g., browser back/forward)
   useEffect(() => {
@@ -46,13 +47,17 @@ export default function Home() {
     navigate(targetPath);
   }
 
-  useEffect(() => {
+  const requestHostOrigin = useCallback(() => {
     const message = {
-      type: 'request-origin',
-      payload: { hello: 'world' },
+      type: PostMessageEvents.RequestHostOrigin,
     };
+
     window.parent.postMessage(message, '*');
   }, []);
+
+  useEffect(() => {
+    requestHostOrigin();
+  }, [requestHostOrigin]);
 
   const [hostOrigin, setHostOrigin] = useState('unknown');
 
@@ -60,16 +65,21 @@ export default function Home() {
     setHostOrigin(eventMessage.payload.origin as string);
   }, []);
 
-  const printMessageHandler = useCallback((eventMessage: PrintMessagePayload) => {
-    console.log('message is:', eventMessage.payload.message);
+  const logMessageHandler = useCallback((eventMessage: LogMessagePayload) => {
+    console.log('log message is:', eventMessage.payload.log);
+  }, []);
+
+  const helloFromHostHandler = useCallback((eventMessage: HelloFromHostPayload) => {
+    setHelloMessage(eventMessage.payload.message);
   }, []);
 
   const incomingMessageHandlers = useMemo(() => {
     return {
       [IncomingMessageEvents.GetHostOrigin]: getHostOriginHandler,
-      [IncomingMessageEvents.PrintMessage]: printMessageHandler,
+      [IncomingMessageEvents.LogMessage]: logMessageHandler,
+      [IncomingMessageEvents.HelloFromHost]: helloFromHostHandler,
     };
-  }, [getHostOriginHandler, printMessageHandler]);
+  }, [getHostOriginHandler, logMessageHandler, helloFromHostHandler]);
 
   useCommunicationWithHost({ incomingMessageHandlers });
 
@@ -88,6 +98,7 @@ export default function Home() {
         <Outlet />
 
         <div className='text-sm text-gray-500 p-6'>Host origin: {hostOrigin}</div>
+        {helloMessage && <div className='text-sm text-gray-500 p-6'>Hello message: {helloMessage}</div>}
       </div>
     </div>
   );
