@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import LineOfCode from '@src/components/LineOfCode';
 import Arrow from '@src/components/StoryTelling/Arrow';
 import FlowStep from '@src/components/StoryTelling/FlowStep';

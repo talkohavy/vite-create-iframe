@@ -18,7 +18,7 @@ export const routes: Array<Route> = [
     to: '/',
     hideFromSidebar: true,
     Component: RedirectToHome,
-  } as Route,
+  },
   {
     to: `${BASE_URL}/home`,
     text: 'Home',

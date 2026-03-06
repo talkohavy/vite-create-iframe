@@ -1,11 +1,11 @@
-import type { LazyExoticComponent, ReactNode } from 'react';
+import type { ComponentType, LazyExoticComponent } from 'react';
 import type { HttpMethodValues } from '../lib/HttpClient';
 
 export type Route = {
   to: string;
-  text: string;
-  activeNames: Array<string>;
-  Component: (() => any) | LazyExoticComponent<() => ReactNode>;
+  text?: string;
+  activeNames?: Array<string>;
+  Component: ComponentType<any> | LazyExoticComponent<ComponentType<any>>;
   hideFromSidebar?: boolean;
   children?: Array<Route>;
 };

@@ -1,5 +1,6 @@
+import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router';
+import { useHistory, useLocation } from 'react-router-dom';
 import { BASE_URL } from '@src/common/constants';
 import RadioTabs from '@src/components/controls/RadioTabs';
 import { getInitialTabValue } from './logic/utils/getInitialValue';
@@ -20,8 +21,12 @@ const tabOptions = [
   { value: Tabs.HostTheme, label: 'Host theme' },
 ];
 
-export default function Home() {
-  const navigate = useNavigate();
+type HomeProps = {
+  children?: ReactNode;
+};
+
+export default function Home({ children }: HomeProps) {
+  const history = useHistory();
   const location = useLocation();
 
   const [currentTabValue, setCurrentTabValue] = useState(getInitialTabValue);
@@ -36,7 +41,7 @@ export default function Home() {
     setCurrentTabValue(tabValue);
 
     const targetPath = `${BASE_URL}/home/${tabValue}`;
-    navigate(targetPath);
+    history.push(targetPath);
   }
 
   return (
@@ -50,9 +55,7 @@ export default function Home() {
         />
       </div>
 
-      <div className='size-full'>
-        <Outlet />
-      </div>
+      <div className='size-full'>{children}</div>
     </div>
   );
 }

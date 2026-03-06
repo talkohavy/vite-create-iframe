@@ -1,33 +1,42 @@
+import type { ComponentType, ReactNode } from 'react';
 import { Suspense } from 'react';
-import { Route, Routes } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
+import { BASE_URL } from '@src/common/constants';
 import Main from './components/Main';
 import PageNotFound from './pages/PageNotFound';
 import { routes } from './routes';
-import type { Route as RouteType } from './common/types';
 
-function renderRoute(route: RouteType, index: number) {
-  const { to: path, Component, children } = route;
-
-  if (children && children.length > 0) {
-    return (
-      <Route key={index} path={path} element={<Component />}>
-        {children.map((childRoute, childIndex) => renderRoute(childRoute, childIndex))}
-      </Route>
-    );
-  }
-
-  // Simple route without children
-  return <Route key={index} path={path} element={<Component />} />;
-}
+const redirectRoute = routes[0]!;
+const homeRoute = routes[1]!;
+const HomePage = homeRoute.Component as ComponentType<{ children?: ReactNode }>;
 
 export default function App() {
   return (
     <Main>
       <Suspense>
-        <Routes>
-          {routes.map((route, index) => renderRoute(route, index))}
-          <Route path='*' element={<PageNotFound />} />
-        </Routes>
+        <Switch>
+          <Route exact path={redirectRoute.to} component={redirectRoute.Component} />
+          {homeRoute.children?.length ? (
+            <Route
+              path={`${BASE_URL}/home`}
+              render={({ match }) => (
+                <HomePage>
+                  <Switch>
+                    {homeRoute.children!.map((child, i) => (
+                      <Route
+                        key={i}
+                        exact={child.to === ''}
+                        path={child.to === '' ? match.path : `${match.path}/${child.to}`}
+                        component={child.Component}
+                      />
+                    ))}
+                  </Switch>
+                </HomePage>
+              )}
+            />
+          ) : null}
+          <Route component={PageNotFound} />
+        </Switch>
       </Suspense>
     </Main>
   );
