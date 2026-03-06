@@ -2,6 +2,7 @@ export const IncomingMessageEvents = {
   GetHostOrigin: 'get-host-origin',
   LogMessage: 'log-message',
   HelloFromHost: 'say-hi',
+  GetHostTheme: 'get-host-theme',
 } as const;
 
 export type IncomingMessageEventValues = (typeof IncomingMessageEvents)[keyof typeof IncomingMessageEvents];

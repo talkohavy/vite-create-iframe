@@ -11,6 +11,7 @@ const LogMessageTab = lazy(() => import('./pages/Home/tabs/LogMessage'));
 const RenderMessageTab = lazy(() => import('./pages/Home/tabs/RenderMessage'));
 const HostOriginLinkTab = lazy(() => import('./pages/Home/tabs/HostOriginLink'));
 const RequestResponseTab = lazy(() => import('./pages/Home/tabs/RequestResponse'));
+const HostThemeTab = lazy(() => import('./pages/Home/tabs/HostTheme'));
 
 export const routes: Array<Route> = [
   {
@@ -28,6 +29,7 @@ export const routes: Array<Route> = [
       `${BASE_URL}/home/render-message`,
       `${BASE_URL}/home/host-origin-link`,
       `${BASE_URL}/home/request-response`,
+      `${BASE_URL}/home/host-theme`,
     ],
     Component: HomePage,
     children: [
@@ -54,6 +56,12 @@ export const routes: Array<Route> = [
         text: 'Request-response',
         activeNames: [],
         Component: RequestResponseTab,
+      },
+      {
+        to: 'host-theme',
+        text: 'Host theme',
+        activeNames: [],
+        Component: HostThemeTab,
       },
     ],
   },

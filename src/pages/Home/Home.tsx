@@ -9,6 +9,7 @@ const Tabs = {
   RenderMessage: 'render-message',
   HostOriginLink: 'host-origin-link',
   RequestResponse: 'request-response',
+  HostTheme: 'host-theme',
 } as const;
 
 const tabOptions = [
@@ -16,6 +17,7 @@ const tabOptions = [
   { value: Tabs.RenderMessage, label: 'Render message' },
   { value: Tabs.HostOriginLink, label: 'Host origin & Link' },
   { value: Tabs.RequestResponse, label: 'Request-response' },
+  { value: Tabs.HostTheme, label: 'Host theme' },
 ];
 
 export default function Home() {
