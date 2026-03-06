@@ -24,8 +24,8 @@ export default defineConfig(({ mode }) => {
   return {
     root: `${process.cwd()}/src`, // <--- defaults to process.cwd(). where the index.html is located.
     plugins: [
-      basicSsl(), // <--- Enabled this to have HTTPS in dev
       react(),
+      basicSsl(), // <--- Enable this to have HTTPS in dev
       tailwindcss(),
       svgr({
         include: '**/*.svg',
